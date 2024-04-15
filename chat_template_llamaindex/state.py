@@ -94,7 +94,7 @@ class State(rx.State):
         async for value in model(question):
             yield value
 
-    @workflow(name="chat-template-llamaindex-process-question")
+    @workflow(name="chat-local-process-question")
     async def openai_process_question(self, question: str):
         """Get the response from the API.
 
