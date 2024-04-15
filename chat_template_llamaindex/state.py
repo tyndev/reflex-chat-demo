@@ -47,9 +47,17 @@ class State(rx.State):
     # The name of the new chat.
     new_chat_name: str = ""
 
+    # Path to your data
+    data_dir = os.getenv("DATA_DIR", "data")
+
+    def handle_submit(self, form_data: dict[str, str]):
+        self.data_dir_input = ""
+        self.data_dir = form_data["data_dir"]
+        self.load_engine()
+
     def load_engine(self):
         """Load the chat engine."""
-        load_remote_vector_store()
+        load_remote_vector_store(self.data_dir)
 
     def create_chat(self):
         """Create a new chat."""

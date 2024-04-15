@@ -13,13 +13,13 @@ _query_engine: BaseQueryEngine
 DATA_DIR = os.getenv("DATA_DIR", "data")
 
 
-def load_remote_vector_store():
+def load_remote_vector_store(data_dir: str = DATA_DIR):
     global _query_engine
     llm = OpenAI(model="gpt-4-0125-preview")
     service_context = ServiceContext.from_defaults(llm=llm)
-    print(f"loading data from local: {DATA_DIR}")
+    print(f"loading data from local: {data_dir}")
     documents = SimpleDirectoryReader(
-        DATA_DIR, required_exts=[".md"], recursive=True
+        data_dir, required_exts=[".md", ".mdx"], recursive=True
     ).load_data()
     print(f"loaded {len(documents)}")
     loaded_index = VectorStoreIndex.from_documents(

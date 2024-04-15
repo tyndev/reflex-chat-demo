@@ -4,7 +4,12 @@ from chat_template_llamaindex.components import loading_icon
 from chat_template_llamaindex.state import QA, State
 
 
-message_style = dict(display="inline-block", padding="1em", border_radius="8px", max_width=["30em", "30em", "50em", "50em", "50em", "50em"])
+message_style = dict(
+    display="inline-block",
+    padding="1em",
+    border_radius="8px",
+    max_width=["30em", "30em", "50em", "50em", "50em", "50em"],
+)
 
 
 def message(qa: QA) -> rx.Component:
@@ -98,6 +103,20 @@ def action_bar() -> rx.Component:
                 color=rx.color("mauve", 10),
             ),
             rx.logo(margin_top="-1em", margin_bottom="-1em"),
+            rx.form(
+                rx.hstack(
+                    rx.input.root(
+                        rx.input.input(
+                            placeholder="Path to your data",
+                            id="data_dir",
+                        )
+                    ),
+                    rx.button("Submit", type="submit"),
+                    rx.text("Currently chatting with: ", State.data_dir),
+                ),
+                on_submit=State.handle_submit,  # type: ignore
+                reset_on_submit=True,
+            ),
             align_items="center",
         ),
         position="sticky",
